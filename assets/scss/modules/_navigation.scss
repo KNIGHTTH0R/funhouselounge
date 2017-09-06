@@ -102,8 +102,9 @@ body {
 }
 
 .fh-home-header {
-	background-image: url('../images/slide2-copy.jpg');
-	background-position: center left;
+	background-image: url('../images/header-overlay.jpg');
+	background-position: center;
+	background-size: cover;
 	padding: 1rem 2rem;
 	
 	position: relative;

@@ -28,13 +28,11 @@ get_header(); ?>
 		    'post_type' => 'post',
 		    'category_name' => 'Event',
 		    'order' => 'ASC',
-		    'meta_query' => array(
-				array(
-			        'key'		=> 'publish_date',
-			        'compare'	=> '<=',
-			        'value'		=> $today,
-			    ),
-			     array(
+'posts_per_page' => 3,
+'orderby' => 'start_date',
+		    'meta_query' => array (
+				
+			     array (
 			        'key'		=> 'expiration_date',
 			        'compare'	=> '>=',
 			        'value'		=> $today,
@@ -44,7 +42,6 @@ get_header(); ?>
 		
 		// get posts
 		$posts = get_posts($args);
-
 		foreach ( $posts as $post ) : setup_postdata( $post ); 
 		$startdate = new DateTime(get_field('start_date'));
 		$enddate = new DateTime(get_field('end_date'));
@@ -58,7 +55,18 @@ get_header(); ?>
 				<div class="fh-home-callout-description">
 					<h3><?php the_title(); ?></h3>
 					<h4><?php the_field('subtitle'); ?></h4>
-					<p><?php echo $startdate->format('F d'); ?> - <?php echo $enddate->format('F d'); ?></p> 
+
+<?php 
+if ( get_field( 'start_date' ) == get_field( 'end_date' ) ): ?>
+
+<p><?php echo $enddate->format('F d'); ?></p> 
+					
+<?php else: // field_name returned false ?>
+<p><?php echo $startdate->format('F d'); ?> - <?php echo $enddate->format('F d'); ?></p> 					
+					
+<?php endif; // end of if field_name logic ?>
+
+
 				</div>
 			</a>
 			
@@ -104,57 +112,14 @@ get_header(); ?>
 			</div>
 		</div>
 	</div>
-	
-	<!--<h2>Upcoming Shows</h2>
-	
-	<div class="row expanded fh-home-callouts">
 
-		
-		<?php 
-		$today = date('Ymd');
-		
-		$args = array (
-		    'post_type' => 'post',
-		    'category_name' => 'Event',
-		    'order' => 'ASC',
-		    'meta_query' => array(
-			     array(
-			        'key'		=> 'publish_date',
-			        'compare'	=> '>=',
-			        'value'		=> $today,
-			    )
-		    ),
-		);
-		
-		// get posts
-		$posts = get_posts($args);
-
-		foreach ( $posts as $post ) : setup_postdata( $post ); ?>
-			
-		
-		<div class="small-12 large-4 columns">
-			<a href="<?php the_permalink(); ?>">
-				<img src="<?php the_field('homepage_image'); ?>" alt="<?php the_title(); ?>">
-				<span>More Information</span>
-			</a>
-			<div class="fh-home-callout-description">
-				<h3><?php the_title(); ?></h3>
-				<h4><?php the_field('subtitle'); ?></h4>
-			</div>
-			
-		</div>
-		<?php endforeach; 
-		wp_reset_postdata();?>
-		
-	
-	</div>-->
 	
 	<div class="row expanded">
 		<div class="small-12 large-6 columns">
 			<h2>Schedule of Events</h2>
 
 			<?php
-			    // query for the about page
+			    // query for the calendar page
 			    $your_query = new WP_Query( 'pagename=calendar' );
 			    // "loop" through query (even though it's just one page) 
 			    while ( $your_query->have_posts() ) : $your_query->the_post();
@@ -166,10 +131,27 @@ get_header(); ?>
 
 		</div>
 		<div class="small-12 large-6 columns">
-			<h2>Purchase Tickets</h2>
-			<div style="width:100%; text-align:left;"><iframe src="//eventbrite.com/tickets-external?eid=35439378134&ref=etckt" frameborder="0" height="1400" width="100%" vspace="0" hspace="0" marginheight="5" marginwidth="5" scrolling="auto" allowtransparency="true"></iframe><div style="font-family:Helvetica, Arial; font-size:12px; padding:10px 0 5px; margin:2px; width:100%; text-align:left;" ><a class="powered-by-eb" style="color: #ADB0B6; text-decoration: none;" target="_blank" href="http://www.eventbrite.com/">Powered by Eventbrite</a></div></div>
+			<h2>Sign up for our newsletter</h2>
+			<p>Show announcements, special ticket deals, and more!</p>
+
+			<?php
+			    // query for the calendar page
+			    $your_query = new WP_Query( 'pagename=newsletter' );
+			    // "loop" through query (even though it's just one page) 
+			    while ( $your_query->have_posts() ) : $your_query->the_post();
+			        the_content();
+			    endwhile;
+			    // reset post data (important!)
+			    wp_reset_postdata();
+			?>
+
+			
 		</div>
 	</div>
+	
+
+	
+
 	
 </section>
 
@@ -187,7 +169,7 @@ get_header(); ?>
 	  $('.fh-home-slider').slick({
 	    centerMode: true,
 	    centerPadding: 0,
-		slidesToShow: 3,
+		slidesToShow: 4,
 		infinite: true,
 		responsive: [
 			{
@@ -202,10 +184,8 @@ get_header(); ?>
 	});
 	
     
-
 	</script>
 
 
 
 <?php get_footer();
-

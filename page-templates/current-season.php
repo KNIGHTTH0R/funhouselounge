@@ -27,7 +27,7 @@ get_header(); ?>
 			    'post_type' => 'post',
 			    'posts_per_page'	=> -1,
 			    'category_name' => 'Event',
-			    'orderby'	=> 'start_date',
+			    ‘orderby’ => ‘start_date’,
 			    'order' => 'ASC',
 			    'meta_query' => array(
 				     array(
