@@ -94,10 +94,18 @@ div#loadingLogo {
 			position: absolute;
 			left: 0;
 			right: 0;
-			top: 100%;
+			top: 75%;
+			z-index: -1;
 						
 			transition: all 200ms ease;
 			
+		}
+		
+		.fh-home-callout-image {
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			height: rem-calc(300);
 		}
 		
 		img {
@@ -140,12 +148,14 @@ div#loadingLogo {
 		}
 		
 		&:hover {
-			img {
+			img,
+			.fh-home-callout-image {
 				opacity: 0.5;
 			}
 			
 			span {
-				top: 50%;
+				top: 33%;
+				z-index: 1;
 				
 				display: block;
 			}

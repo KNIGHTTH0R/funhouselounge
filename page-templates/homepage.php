@@ -50,7 +50,10 @@ get_header(); ?>
 		
 		<div class="small-12 large-4 columns">
 			<a href="<?php the_permalink(); ?>">
-				<img src="<?php the_field('homepage_image'); ?>" alt="<?php the_title(); ?>">
+				<div class="fh-home-callout-image hide-for-small-only" style="background-image: url(<?php the_field('homepage_image'); ?>" alt="<?php the_title(); ?>)">
+				</div>
+				<img class="show-for-small-only" src="<?php the_field('homepage_image'); ?>" alt="<?php the_title(); ?>">
+				
 				<span>Info and Tickets</span>
 				<div class="fh-home-callout-description">
 					<h3><?php the_title(); ?></h3>
